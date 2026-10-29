@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Importadora Agroenergía SAS | Plantas Eléctricas en Colombia</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandGreen: '#126634',
+                        brandGreenLight: '#1b8a47',
+                        brandDarkGreen: '#0b4221',
+                        brandGold: '#d4af37',
+                        brandDark: '#121614',
+                        brandGray: '#1e2421',
+                        brandLightGray: '#f4f7f5'
+                    },
+                    fontFamily: {
+                        montserrat: ['Montserrat', 'sans-serif'],
+                        roboto: ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .bg-pattern {
+            background-color: #121614;
+            background-image: radial-gradient(#126634 0.75px, transparent 0.75px), radial-gradient(#126634 0.75px, #121614 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            opacity: 0.95;
+        }
+        .admin-editable:hover {
+            outline: 2px dashed #d4af37;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="font-roboto bg-brandLightGray text-gray-800 antialiased selection:bg-brandGreen selection:text-white">
+
+    <!-- Top Info Bar -->
+    <div class="bg-brandDark text-gray-300 text-xs py-2 px-4 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center gap-6">
+                <span><i class="fa-solid fa-phone text-brandGreen mr-1"></i> +57 311 5110280</span>
+                <span><i class="fa-solid fa-envelope text-brandGreen mr-1"></i> agroenergiasas@gmail.com</span>
+                <span class="hidden md:inline"><i class="fa-solid fa-location-dot text-brandGreen mr-1"></i> Villavicencio, Colombia (Cobertura Nacional)</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-brandGold text-[11px] font-semibold tracking-wider uppercase"><i class="fa-solid fa-shield-halved mr-1"></i> Equipos de 1 kVA a 3000 kVA</span>
+                <button onclick="toggleAdminPanel()" class="text-gray-500 hover:text-brandGold transition" title="Modo Edición Privado">
+                    <i class="fa-solid fa-lock text-xs"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white shadow-md border-b-2 border-brandGreen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <img id="mainLogo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23126634'/><path d='M50 20 L65 50 L52 50 L60 80 L35 45 L48 45 Z' fill='%23d4af37'/></svg>" alt="Agroenergía SAS Logo" class="h-14 w-auto object-contain transition transform group-hover:scale-105">
+                <div>
+                    <span class="block font-montserrat font-extrabold text-xl tracking-tight text-brandDark">AGROENERGIA <span class="text-brandGreen">SAS</span></span>
+                    <span class="block text-[10px] uppercase font-bold tracking-widest text-brandGold">Soluciones Integrales</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 font-montserrat font-semibold text-sm text-gray-700">
+                <a href="#inicio" class="hover:text-brandGreen transition">Inicio</a>
+                <a href="#catalogo" class="hover:text-brandGreen transition">Plantas Eléctricas</a>
+                <a href="#servicios" class="hover:text-brandGreen transition">Servicios</a>
+                <a href="#calculadora" class="hover:text-brandGreen transition">Calculadora kVA</a>
+                <a href="#nosotros" class="hover:text-brandGreen transition">Nosotros</a>
+            </nav>
+
+            <!-- CTA Header -->
+            <div class="hidden lg:flex items-center gap-3">
+                <a href="https://wa.me/573115110280?text=Hola,%20requiero%20asesoria%20sobre%20sus%20plantas%20electricas" target="_blank" class="bg-brandGreen hover:bg-brandDarkGreen text-white font-montserrat font-bold text-xs uppercase px-5 py-3 rounded-lg shadow-md transition flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Asesoría Inmediata
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button onclick="toggleMobileMenu()" class="md:hidden text-brandDark text-2xl focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-brandDark text-white px-6 py-6 border-t border-gray-800 space-y-4 font-montserrat font-medium">
+            <a href="#inicio" onclick="toggleMobileMenu()" class="block hover:text-brandGold">Inicio</a>
+            <a href="#catalogo" onclick="toggleMobileMenu()" class="block hover:text-brandGold">Plantas Eléctricas</a>
+            <a href="#servicios" onclick="toggleMobileMenu()" class="block hover:text-brandGold">Servicios Especializados</a>
+            <a href="#calculadora" onclick="toggleMobileMenu()" class="block hover:text-brandGold">Calculadora de Potencia</a>
+            <a href="#nosotros" onclick="toggleMobileMenu()" class="block hover:text-brandGold">Contacto</a>
+            <a href="https://wa.me/573115110280" target="_blank" class="block text-center bg-brandGreen text-white py-3 rounded-lg font-bold">
+                <i class="fa-brands fa-whatsapp mr-2"></i> WhatsApp Directo
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="relative bg-pattern text-white py-20 lg:py-28 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6 text-left">
+                <div class="inline-flex items-center gap-2 bg-brandGreen/20 border border-brandGreen/50 text-brandGold font-semibold text-xs px-3 py-1.5 rounded-full uppercase tracking-wider">
+                    <i class="fa-solid fa-bolt"></i> Venta, Mantenimiento e Instalación
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-montserrat font-black leading-tight tracking-tight">
+                    Energía Continua para <span class="text-brandGreen">tu Negocio</span> e Industria
+                </h1>
+                <p class="text-gray-300 text-lg font-light leading-relaxed">
+                    Especialistas en la comercialización, instalación, mantenimiento preventivo y correctivo de plantas eléctricas a diésel y gas. Garantizamos respaldo energético confiable en todo el territorio nacional.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="#catalogo" class="bg-brandGreen hover:bg-brandGreenLight text-white font-montserrat font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-brandGreen/50 transition text-center uppercase tracking-wider text-sm flex items-center justify-center gap-2">
+                        Ver Plantas Eléctricas <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="#calculadora" class="bg-transparent hover:bg-white/10 text-white border-2 border-brandGold hover:border-white font-montserrat font-bold px-8 py-4 rounded-xl transition text-center uppercase tracking-wider text-sm flex items-center justify-center gap-2">
+                        Calcular kVA Necesarios <i class="fa-solid fa-calculator text-brandGold"></i>
+                    </a>
+                </div>
+                <div class="pt-6 grid grid-cols-3 gap-4 border-t border-gray-800/80 text-center sm:text-left">
+                    <div>
+                        <span class="block font-montserrat font-extrabold text-2xl text-brandGold">1-3000</span>
+                        <span class="text-xs text-gray-400 uppercase">Capacidad kVA</span>
+                    </div>
+                    <div>
+                        <span class="block font-montserrat font-extrabold text-2xl text-brandGreen">24/7</span>
+                        <span class="text-xs text-gray-400 uppercase">Soporte Técnico</span>
+                    </div>
+                    <div>
+                        <span class="block font-montserrat font-extrabold text-2xl text-white">100%</span>
+                        <span class="text-xs text-gray-400 uppercase">Garantía Real</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Emblem Visual -->
+            <div class="relative flex justify-center items-center">
+                <div class="absolute w-80 h-80 bg-brandGreen/20 rounded-full blur-3xl -z-10"></div>
+                <div class="bg-brandGray/90 border border-gray-700/60 p-8 rounded-3xl shadow-2xl max-w-md w-full text-center space-y-6">
+                    <img id="heroLogo" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23126634'/><path d='M50 20 L65 50 L52 50 L60 80 L35 45 L48 45 Z' fill='%23d4af37'/></svg>" alt="Logo Agroenergía" class="h-32 w-auto mx-auto object-contain">
+                    <div class="border-t border-b border-gray-700 py-4 space-y-2">
+                        <h3 class="font-montserrat font-extrabold text-xl text-white">IMPORTADORA AGROENERGIA SAS</h3>
+                        <p class="text-xs text-brandGold font-bold uppercase tracking-widest">Respaldo Técnico Especializado</p>
+                    </div>
+                    <div class="space-y-3 text-left text-sm text-gray-300">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-check-circle text-brandGreen"></i>
+                            <span>Plantas Diésel y Gas Insonorizadas</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-check-circle text-brandGreen"></i>
+                            <span>Tableros de Transferencia Automática (TTA)</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-check-circle text-brandGreen"></i>
+                            <span>Mantenimiento Preventivo y Repuestos</span>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/573115110280?text=Hola,%20deseo%20cotizar%20una%20planta%20electrica" target="_blank" class="block w-full bg-brandGold hover:bg-yellow-500 text-brandDark font-montserrat font-extrabold py-3.5 rounded-xl transition text-center uppercase text-sm shadow-md">
+                        Cotizar mi Planta Ahora
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicios" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <span class="text-brandGreen font-bold uppercase text-xs tracking-widest">Nuestra Especialidad</span>
+                <h2 class="text-3xl sm:text-4xl font-montserrat font-extrabold text-brandDark">Servicios Integrales de Energía</h2>
+                <div class="w-20 h-1 bg-brandGreen mx-auto rounded-full"></div>
+                <p class="text-gray-600 text-base">Acompañamos cada etapa de su proyecto energético, desde la asesoría inicial hasta la instalación y el soporte postventa.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-brandLightGray p-8 rounded-2xl border border-gray-100 hover:border-brandGreen transition shadow-sm hover:shadow-xl group space-y-4">
+                    <div class="w-14 h-14 bg-brandGreen/10 text-brandGreen rounded-xl flex items-center justify-center text-2xl group-hover:bg-brandGreen group-hover:text-white transition">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <h3 class="font-montserrat font-bold text-xl text-brandDark">Venta de Plantas</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Suministro de generadores eléctricos nuevos desde 1 kVA hasta 3000 kVA en configuraciones cabinadas e insonoras o abiertas.</p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-brandLightGray p-8 rounded-2xl border border-gray-100 hover:border-brandGreen transition shadow-sm hover:shadow-xl group space-y-4">
+                    <div class="w-14 h-14 bg-brandGreen/10 text-brandGreen rounded-xl flex items-center justify-center text-2xl group-hover:bg-brandGreen group-hover:text-white transition">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    <h3 class="font-montserrat font-bold text-xl text-brandDark">Mantenimiento</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Planes preventivos y atención correctiva de emergencia. Cambio de filtros, aceites, pruebas de carga y diagnóstico integral.</p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-brandLightGray p-8 rounded-2xl border border-gray-100 hover:border-brandGreen transition shadow-sm hover:shadow-xl group space-y-4">
+                    <div class="w-14 h-14 bg-brandGreen/10 text-brandGreen rounded-xl flex items-center justify-center text-2xl group-hover:bg-brandGreen group-hover:text-white transition">
+                        <i class="fa-solid fa-plug-circle-bolt"></i>
+                    </div>
+                    <h3 class="font-montserrat font-bold text-xl text-brandDark">Instalación y TTA</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Montaje electromecánico, adecuación de subestaciones, tableros de transferencia automática e insonorización técnica.</p>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="bg-brandLightGray p-8 rounded-2xl border border-gray-100 hover:border-brandGreen transition shadow-sm hover:shadow-xl group space-y-4">
+                    <div class="w-14 h-14 bg-brandGreen/10 text-brandGreen rounded-xl flex items-center justify-center text-2xl group-hover:bg-brandGreen group-hover:text-white transition">
+                        <i class="fa-solid fa-clipboard-user"></i>
+                    </div>
+                    <h3 class="font-montserrat font-bold text-xl text-brandDark">Asesoría Técnica</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Cálculo exacto de cargas eléctricas, estudios de factibilidad para el sector agroindustrial, comercial, hospitalario y residencial.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Section -->
+    <section id="catalogo" class="py-20 bg-brandLightGray border-t border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                <div>
+                    <span class="text-brandGreen font-bold uppercase text-xs tracking-widest">Catálogo Destacado</span>
+                    <h2 class="text-3xl sm:text-4xl font-montserrat font-extrabold text-brandDark">Plantas Eléctricas Disponibles</h2>
+                </div>
+                <!-- Filter Buttons -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterCatalog('all')" class="bg-brandDark text-white px-4 py-2 rounded-lg text-xs font-bold uppercase">Todas</button>
+                    <button onclick="filterCatalog('diesel')" class="bg-white hover:bg-brandGreen hover:text-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-xs font-bold uppercase transition">Diésel</button>
+                    <button onclick="filterCatalog('gas')" class="bg-white hover:bg-brandGreen hover:text-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-xs font-bold uppercase transition">Gas</button>
+                </div>
+            </div>
+
+            <!-- Grid Items -->
+            <div id="catalogGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Item 1 -->
+                <div class="catalog-item diesel bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-gray-200 transition flex flex-col">
+                    <div class="bg-brandDark p-6 text-white relative">
+                        <span class="absolute top-4 right-4 bg-brandGreen text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Diésel Insonora</span>
+                        <h3 class="font-montserrat font-extrabold text-2xl text-white">Planta 15 - 30 kVA</h3>
+                        <p class="text-xs text-brandGold font-medium">Línea Comercial e Industrial Ligera</p>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-6">
+                        <ul class="space-y-3 text-sm text-gray-600">
+                            <li class="flex items-center justify-between border-b pb-2"><span>Motor:</span> <strong class="text-brandDark">4 Tiempos Inyección Directa</strong></li>
+                            <li class="flex items-center justify-between border-b pb-2"><span>Insonorización:</span> <strong class="text-brandDark">Cabina 70 dB @ 7m</strong></li>
+                            <li class="flex items-center justify-between border-b pb-2"><span>Voltaje:</span> <strong class="text-brandDark">220V / 440V Trifásica</strong></li>
+                            <li class="flex items-center justify-between"><span>Ideal para:</span> <strong class="text-brandDark">Fincas, Locales, Oficinas</strong></li>
+                        </ul>
+                        <a href="https://wa.me/573115110280?text=Hola,%20solicito%20cotizacion%20de%20la%20Planta%2015-30%20kVA" target="_blank" class="block w-full bg-brandDark hover:bg-brandGreen text-white text-center font-bold py-3 rounded-xl transition text-sm">
+                            <i class="fa-brands fa-whatsapp mr-1 text-green-400"></i> Cotizar este Modelo
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="catalog-item diesel bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-gray-200 transition flex flex-col">
+                    <div class="bg-brandDark p-6 text-white relative">
+                        <span class="absolute top-4 right-4 bg-brandGreen text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Diésel Insonora</span>
+                        <h3 class="font-montserrat font-extrabold text-2xl text-white">Planta 50 - 150 kVA</h3>
+                        <p class="text-xs text-brandGold font-medium">Línea Agroindustrial y Construcción</p>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-6">
+                        <ul class="space-y-3 text-sm text-gray-600">
+                            <li class="flex items-center justify-between border-b pb-2"><span>Motor:</span> <strong class="text-brandDark">Alto Rendimiento Turbo</strong></li>
+                            <li class="flex items-center justify-between border-b pb-2"><span>Tablero:</span> <strong class="text-brandDark">Control Digital Inteligente</strong></li>
+                            <li class="flex items-center justify-between border-b pb-2"><span>Autonomía:</span> <strong class="text-brandDark">8 - 12 Horas Continuas</strong></li>
+                            <li class="flex items-center justify-between"><span>Ideal para:</span> <strong class="text-brandDark">Avícolas, Galpones, Clínicas</strong></li>
+                        </ul>
+                        <a href="https://wa.me/573115110280?text=Hola,%20solicito%20cotizacion%20de%20la%20Planta%2050-150%20kVA" target="_blank" class="block w-full bg-brandDark hover:bg-brandGreen text-white text-center font-bold py-3 rounded-xl transition text-sm">
+                            <i class="fa-brands fa-whatsapp mr-1 text-green-400"></i> Cotizar este Modelo
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="catalog-item diesel bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl border border-gray-200 transition flex flex-col">
+                    <div class="bg-brandDark p-6 text-white relative">
+                        <span class="absolute top-4 right-4 bg-brandGold text-brandDark text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Gran Potencia</span>
+                        <h3 class="font-montserrat font-extrabold text-2xl text-white">Planta 200 - 1000+ kVA</h3>
+                        <p class="text-xs text-brandGold font-medium">Línea Industrial Pesada y Minería</p>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-6">
+                        <ul class="space-y-3 text-sm text-gray-600">
+                            <li class="flex items-center justify-between border-b pb-2"><span>Sincronismo:</span> <strong class="text-brandDark">Apta para Paralelo</strong></li>
+                            <li class="flex items-center justify-between border-b pb-2"><span>Estructura:</span> <strong class="text-brandDark">Chasis Antivibratorio Heavy Duty</strong></li>
+                            <li class="flex items-center justify-between border-b pb-2"><span>Transferencia:</span> <strong class="text-brandDark">Incluye Opción TTA</strong></li>
+                            <li class="flex items-center justify-between"><span>Ideal para:</span> <strong class="text-brandDark">Petróleo, Plantas de Proceso</strong></li>
+                        </ul>
+                        <a href="https://wa.me/573115110280?text=Hola,%20solicito%20cotizacion%20de%20la%20Planta%20200-1000%20kVA" target="_blank" class="block w-full bg-brandDark hover:bg-brandGreen text-white text-center font-bold py-3 rounded-xl transition text-sm">
+                            <i class="fa-brands fa-whatsapp mr-1 text-green-400"></i> Cotizar este Modelo
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive kVA Calculator -->
+    <section id="calculadora" class="py-20 bg-brandDark text-white relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+                <span class="text-brandGold font-bold uppercase text-xs tracking-widest"><i class="fa-solid fa-calculator mr-1"></i> Herramienta Interactiva</span>
+                <h2 class="text-3xl sm:text-4xl font-montserrat font-extrabold text-white">Calculadora Estimada de Potencia kVA</h2>
+                <p class="text-gray-400 text-sm">Selecciona o ingresa los equipos que necesitas respaldar para calcular una estimación de la planta eléctrica ideal.</p>
+            </div>
+
+            <div class="bg-brandGray border border-gray-700/80 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-8">
+                <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <label class="flex items-center justify-between p-4 bg-brandDark border border-gray-700 rounded-xl cursor-pointer hover:border-brandGreen transition">
+                        <span class="text-sm font-medium"><i class="fa-solid fa-snowflake text-brandGreen mr-2"></i> Aire Acondicionado (18 BTU)</span>
+                        <input type="checkbox" value="2.5" class="calc-app accent-brandGreen w-5 h-5" onchange="calculateKVA()">
+                    </label>
+                    <label class="flex items-center justify-between p-4 bg-brandDark border border-gray-700 rounded-xl cursor-pointer hover:border-brandGreen transition">
+                        <span class="text-sm font-medium"><i class="fa-solid fa-arrows-spin text-brandGreen mr-2"></i> Motor / Bomba de Agua 2HP</span>
+                        <input type="checkbox" value="3.5" class="calc-app accent-brandGreen w-5 h-5" onchange="calculateKVA()">
+                    </label>
+                    <label class="flex items-center justify-between p-4 bg-brandDark border border-gray-700 rounded-xl cursor-pointer hover:border-brandGreen transition">
+                        <span class="text-sm font-medium"><i class="fa-solid fa-computer text-brandGreen mr-2"></i> 5 Ordenadores / Servidores</span>
+                        <input type="checkbox" value="2.0" class="calc-app accent-brandGreen w-5 h-5" onchange="calculateKVA()">
+                    </label>
+                    <label class="flex items-center justify-between p-4 bg-brandDark border border-gray-700 rounded-xl cursor-pointer hover:border-brandGreen transition">
+                        <span class="text-sm font-medium"><i class="fa-solid fa-temperature-arrow-down text-brandGreen mr-2"></i> Cuarto Frío / Cava</span>
+                        <input type="checkbox" value="8.0" class="calc-app accent-brandGreen w-5 h-5" onchange="calculateKVA()">
+                    </label>
+                    <label class="flex items-center justify-between p-4 bg-brandDark border border-gray-700 rounded-xl cursor-pointer hover:border-brandGreen transition">
+                        <span class="text-sm font-medium"><i class="fa-solid fa-lightbulb text-brandGreen mr-2"></i> Iluminación General LED</span>
+                        <input type="checkbox" value="1.5" class="calc-app accent-brandGreen w-5 h-5" onchange="calculateKVA()">
+                    </label>
+                    <label class="flex items-center justify-between p-4 bg-brandDark border border-gray-700 rounded-xl cursor-pointer hover:border-brandGreen transition">
+                        <span class="text-sm font-medium"><i class="fa-solid fa-industry text-brandGreen mr-2"></i> Maquinaria Pesada</span>
+                        <input type="checkbox" value="15.0" class="calc-app accent-brandGreen w-5 h-5" onchange="calculateKVA()">
+                    </label>
+                </div>
+
+                <!-- Custom Input -->
+                <div class="pt-4 border-t border-gray-700/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <span class="text-sm text-gray-300">¿Tienes un consumo en Kilowatts (kW) conocido?</span>
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <input type="number" id="customKW" placeholder="kW adicionales" class="bg-brandDark border border-gray-600 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-brandGreen w-full sm:w-40" oninput="calculateKVA()">
+                        <span class="text-xs text-gray-400">kW</span>
+                    </div>
+                </div>
+
+                <!-- Result Box -->
+                <div class="bg-brandDark/80 border-2 border-brandGreen p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+                    <div>
+                        <span class="text-xs uppercase text-gray-400 font-bold block">Capacidad Sugerida (con margen del 25% de seguridad)</span>
+                        <div class="flex items-baseline justify-center md:justify-start gap-2 mt-1">
+                            <span id="resultKVA" class="text-4xl sm:text-5xl font-montserrat font-black text-brandGold">0.0</span>
+                            <span class="text-xl font-bold text-white">kVA</span>
+                        </div>
+                    </div>
+                    <a id="btnSendCalc" href="https://wa.me/573115110280?text=Hola,%20necesito%20asesoria%20para%20una%20planta%20electrica" target="_blank" class="bg-brandGreen hover:bg-brandGreenLight text-white font-montserrat font-bold px-6 py-3.5 rounded-xl transition uppercase text-xs tracking-wider flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Solicitar Asesoría para este Cálculo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About & Contact Section -->
+    <section id="nosotros" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <span class="text-brandGreen font-bold uppercase text-xs tracking-widest">Sobre Importadora Agroenergía SAS</span>
+                <h2 class="text-3xl sm:text-4xl font-montserrat font-extrabold text-brandDark">Compromiso con el Respaldo Energético de Colombia</h2>
+                <p class="text-gray-600 leading-relaxed text-base">
+                    Somos una empresa colombiana especializada en brindar soluciones de generación de energía continua y de emergencia. Atendemos los sectores agroindustrial, empresarial, hospitalario y residencial con equipos de alta eficiencia y la mejor cobertura técnica en Villavicencio y a nivel nacional.
+                </p>
+                <div class="grid grid-cols-2 gap-4 pt-2">
+                    <div class="border-l-4 border-brandGreen pl-4">
+                        <h4 class="font-bold text-brandDark text-sm">Calidad Certificada</h4>
+                        <p class="text-xs text-gray-500">Equipos fabricados bajo normativas internacionales.</p>
+                    </div>
+                    <div class="border-l-4 border-brandGold pl-4">
+                        <h4 class="font-bold text-brandDark text-sm">Respuesta Rápida</h4>
+                        <p class="text-xs text-gray-500">Mantenimiento de emergencia y repuestos originales.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Card -->
+            <div class="bg-brandLightGray border border-gray-200 p-8 rounded-3xl space-y-6">
+                <h3 class="font-montserrat font-bold text-2xl text-brandDark">Contacto Directo</h3>
+                <div class="space-y-4 text-sm text-gray-700">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-brandGreen/10 text-brandGreen rounded-lg flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <div>
+                            <strong class="block text-brandDark">Línea Móvil / WhatsApp</strong>
+                            <span>+57 311 5110280</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-brandGreen/10 text-brandGreen rounded-lg flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div>
+                            <strong class="block text-brandDark">Correo Electrónico</strong>
+                            <span>agroenergiasas@gmail.com</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 bg-brandGreen/10 text-brandGreen rounded-lg flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <div>
+                            <strong class="block text-brandDark">Ubicación Principal</strong>
+                            <span>Villavicencio, Meta, Colombia (Atención a Todo el País)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="https://wa.me/573115110280" target="_blank" class="block text-center w-full bg-brandGreen hover:bg-brandDarkGreen text-white font-montserrat font-bold py-4 rounded-xl shadow-md transition uppercase text-xs tracking-wider">
+                    Escribir por WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brandDark text-white py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+            <div>
+                <span class="font-montserrat font-extrabold text-xl">IMPORTADORA AGROENERGIA <span class="text-brandGreen">SAS</span></span>
+                <p class="text-xs text-gray-400 mt-1">Venta, Mantenimiento, Instalación y Asesoria de Plantas Eléctricas en Colombia.</p>
+            </div>
+            <div class="text-xs text-gray-500 space-y-1">
+                <p>© <span id="currentYear"></span> Importadora Agroenergía SAS. Todos los derechos reservados.</p>
+                <p><button onclick="toggleAdminPanel()" class="hover:underline text-gray-600">Acceso Edición Privada</button></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/573115110280?text=Hola,%20deseo%20mas%20informacion%20sobre%20sus%20plantas%20electricas" target="_blank" class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-2xl z-50 transition transform hover:scale-110">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Private Admin Panel Modal -->
+    <div id="adminModal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-6 text-gray-800 shadow-2xl">
+            <div class="flex justify-between items-center border-b pb-4">
+                <h3 class="font-montserrat font-bold text-lg text-brandDark"><i class="fa-solid fa-user-gear text-brandGreen mr-2"></i> Panel de Modificación Privado</h3>
+                <button onclick="toggleAdminPanel()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+
+            <!-- PIN Protection -->
+            <div id="adminAuth" class="space-y-4">
+                <p class="text-xs text-gray-600">Ingresa la clave de acceso para activar el modo de edición exclusivo:</p>
+                <input type="password" id="adminPin" placeholder="PIN de acceso (Predeterminado: 1234)" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:border-brandGreen">
+                <button onclick="checkAdminPin()" class="w-full bg-brandGreen text-white font-bold py-3 rounded-lg text-sm uppercase">Acceder</button>
+            </div>
+
+            <!-- Admin Options -->
+            <div id="adminControls" class="hidden space-y-4">
+                <div class="p-3 bg-green-50 border border-green-200 text-green-800 text-xs rounded-lg">
+                    <i class="fa-solid fa-circle-check mr-1"></i> Modo Edición Activado.
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold uppercase text-gray-700">Cambiar Imagen del Logo:</label>
+                    <input type="file" id="logoUpload" accept="image/*" class="text-xs w-full border p-2 rounded-lg" onchange="uploadCustomLogo(event)">
+                </div>
+
+                <div class="space-y-2 pt-2 border-t">
+                    <label class="block text-xs font-bold uppercase text-gray-700">Modificar Textos:</label>
+                    <p class="text-xs text-gray-500">Haz clic directamente sobre cualquier texto de la página para modificarlo en tiempo real.</p>
+                </div>
+
+                <button onclick="saveChanges()" class="w-full bg-brandDark text-white font-bold py-3 rounded-lg text-sm uppercase hover:bg-brandGreen transition">
+                    <i class="fa-solid fa-floppy-disk mr-1"></i> Guardar Cambios Localmente
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts Logic -->
+    <script>
+        document.getElementById('currentYear').innerText = new Date().getFullYear();
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        function filterCatalog(category) {
+            const items = document.querySelectorAll('.catalog-item');
+            items.forEach(item => {
+                if(category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function calculateKVA() {
+            let totalKW = 0;
+            const checkboxes = document.querySelectorAll('.calc-app:checked');
+            checkboxes.forEach(cb => {
+                totalKW += parseFloat(cb.value);
+            });
+
+            const customKW = parseFloat(document.getElementById('customKW').value) || 0;
+            totalKW += customKW;
+
+            const kVA = (totalKW / 0.8) * 1.25;
+            const finalKVA = kVA > 0 ? kVA.toFixed(1) : '0.0';
+
+            document.getElementById('resultKVA').innerText = finalKVA;
+
+            const whatsappMsg = `Hola Agroenergia SAS, utilicé la calculadora de su sitio web y mi consumo estimado es de ${finalKVA} kVA. Quisiera recibir asesoría y cotización.`;
+            document.getElementById('btnSendCalc').href = `https://wa.me/573115110280?text=${encodeURIComponent(whatsappMsg)}`;
+        }
+
+        function toggleAdminPanel() {
+            const modal = document.getElementById('adminModal');
+            modal.classList.toggle('hidden');
+        }
+
+        function checkAdminPin() {
+            const pin = document.getElementById('adminPin').value;
+            if(pin === '1234') {
+                document.getElementById('adminAuth').classList.add('hidden');
+                document.getElementById('adminControls').classList.remove('hidden');
+                enableDirectEditing();
+            } else {
+                alert('PIN Incorrecto. Intente de nuevo.');
+            }
+        }
+
+        function uploadCustomLogo(event) {
+            const file = event.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const dataUrl = e.target.result;
+                    document.getElementById('mainLogo').src = dataUrl;
+                    document.getElementById('heroLogo').src = dataUrl;
+                    localStorage.setItem('agro_custom_logo', dataUrl);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function enableDirectEditing() {
+            const editableElements = document.querySelectorAll('h1, h2, h3, p, span');
+            editableElements.forEach(el => {
+                el.contentEditable = "true";
+                el.classList.add('admin-editable');
+            });
+        }
+
+        function saveChanges() {
+            localStorage.setItem('agro_page_html', document.body.innerHTML);
+            alert('¡Cambios guardados con éxito en este navegador!');
+            toggleAdminPanel();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLogo = localStorage.getItem('agro_custom_logo');
+            if(savedLogo) {
+                const mainLogo = document.getElementById('mainLogo');
+                const heroLogo = document.getElementById('heroLogo');
+                if(mainLogo) mainLogo.src = savedLogo;
+                if(heroLogo) heroLogo.src = savedLogo;
+            }
+        });
+    </script>
+</body>
+</html>
